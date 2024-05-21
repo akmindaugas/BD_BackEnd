@@ -73,7 +73,7 @@ export const LOG_IN = async (req, res) => {
     );
 
     if (!isPasswordMatch) {
-      return res.status(401).json({ message: "bad data" });
+      return res.status(401).json({ message: "bad data you entered" });
     }
 
     const jwt_token = jwt.sign(

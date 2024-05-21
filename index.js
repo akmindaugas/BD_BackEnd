@@ -3,7 +3,8 @@ import express from "express";
 import mongoose from "mongoose";
 import "dotenv/config";
 // routo takelyje items turi buti su pletiniu .js, kitaip nesuveiks
-import itemRoutes from "./src/routes/item.js";
+import answerRoutes from "./src/routes/answer.js";
+import questionRoutes from "./src/routes/question.js"
 import userRoutes from "./src/routes/user.js";
 
 const app = express();
@@ -22,7 +23,8 @@ mongoose
 
 // uznaudojam, kitaip neras endpointo
 app.use(userRoutes);
-app.use(itemRoutes);
+app.use(answerRoutes);
+app.use(questionRoutes);
 
 app.use((req, res) => {
   return res.status(404).json({ message: "this endpoint does not exist" });

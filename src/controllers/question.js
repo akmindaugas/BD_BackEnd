@@ -14,16 +14,16 @@ export const GET_ALL_QUESTIONS = async (req, res) => {
   }
 };
 
-export const GET_QUESTIONS_BY_ID = async (req, res) => {
+export const GET_QUESTION_BY_ID = async (req, res) => {
   try {
     const question = await QuestionModel.findOne({ id: req.params.id });
-    // ivesti responsa, kad ne 'this endpoint does note exists', bet "no such item found'"
+    // ivesti responsa, kad ne 'this endpoint does note exists', bet "no such question found'"
     return res.status(200).json({ question: question });
   } catch (err) {
     console.log(err);
   }
 };
-// trinant item pagal id, id paduodame per url, todel jis yra imamas is params, ne body
+// trinant question pagal id, id paduodame per url, todel jis yra imamas is params, ne body
 
 export const CREATE_QUESTION = async (req, res) => {
   try {

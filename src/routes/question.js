@@ -1,19 +1,20 @@
 import express from "express";
 import {
-  GET_ALL_ITEMS,
-  INSERT_ITEM,
-  GET_ITEM_BY_ID,
-  DELETE_ITEM_BY_ID,
-} from "../controllers/item.js";
+  GET_ALL_QUESTIONS,
+  GET_QUESTION_BY_ID,
+  CREATE_QUESTION,
+  DELETE_QUESTION_BY_ID,
+} from "../controllers/question.js";
 
 import { auth } from "../middlewares/auth.js";
 
 // per si routeri kuriame visu endpointus
 const router = express.Router();
 
-router.get("/items", GET_ALL_ITEMS);
-router.get("/items/:id", GET_ITEM_BY_ID);
-router.post("/items", INSERT_ITEM);
-router.delete("/items/:id", DELETE_ITEM_BY_ID);
+router.get("/questions", GET_ALL_QUESTIONS);
+router.get("/questions/:id", GET_QUESTION_BY_ID);
+router.post("/questions", CREATE_QUESTION);
+router.delete("/questions/:id", DELETE_QUESTION_BY_ID);
+// insert auth, where it belongs
 
 export default router;
