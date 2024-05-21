@@ -2,30 +2,30 @@ import { v4 as uuidv4 } from "uuid";
 import UserModel from "../models/user.js";
 
 // taip pat butinas pletinys.js path pabaigoje
-import ItemModel from "../models/question.js";
+import AnswerModel from "../models/answer.js";
 
-export const GET_ALL_ITEMS = async (req, res) => {
+export const GET_ALL_ANSWERS = async (req, res) => {
   try {
-    const items = await ItemModel.find();
+    const answers = await AnswerModel.find();
 
-    return res.status(200).json({ items: items });
+    return res.status(200).json({ answers: answers });
   } catch (err) {
     console.log(err);
   }
 };
 
-export const GET_ITEM_BY_ID = async (req, res) => {
+export const GET_ANSWER_BY_ID = async (req, res) => {
   try {
-    const item = await ItemModel.findOne({ id: req.params.id });
+    const answer = await AnswerModel.findOne({ id: req.params.id });
     // ivesti responsa, kad ne 'this endpoint does note exists', bet "no such item found'"
-    return res.status(200).json({ item: item });
+    return res.status(200).json({ answer: answer });
   } catch (err) {
     console.log(err);
   }
 };
 // trinant item pagal id, id paduodame per url, todel jis yra imamas is params, ne body
 
-export const INSERT_ITEM = async (req, res) => {
+export const INSERT_ANSWER = async (req, res) => {
   try {
     console.log(req.body);
 
@@ -34,34 +34,34 @@ export const INSERT_ITEM = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const item = new ItemModel({
+    const answer = new AnswerModel({
       id: uuidv4(),
       title: req.body.title,
       user: user.id,
-      price: req.body.price,
-      photoUrl: req.body.photoUrl,
+      content: { type: Number, required: true },
+      photoUrl: { type: String, required: false },
     });
-    const response = await item.save();
+    const response = await answer.save();
 
-    user.items.push(item.id);
+    user.answers.push(answer.id);
     await user.save();
 
     return res
       .status(200)
-      .json({ item: response, message: "item was added successfuly" });
+      .json({ answer: response, message: "answer was added successfuly" });
   } catch (err) {
     console.log(err);
   }
 };
 
-export const DELETE_ITEM_BY_ID = async (req, res) => {
+export const DELETE_ANSWER_BY_ID = async (req, res) => {
   try {
-    const item = await ItemModel.findOne({ id: req.params.id });
+    const answer = await AnswerModel.findOne({ id: req.params.id });
 
-    if (!item.userId !== req.body.userId) {
+    if (!answer.userId !== req.body.userId) {
       return res
         .status(401)
-        .json({ message: "you try delete item belongs not for you" });
+        .json({ message: "you try delete not yours answer" });
     }
 
     return res.status(200).json({ response: response });
