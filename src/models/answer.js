@@ -4,7 +4,7 @@ const answerSchema = mongoose.Schema({
   id: { type: String, required: true },
   title: { type: String, required: true },
   user: { type: String, required: true },
-  content: { type: Number, required: true },
+  content: { type: String, required: true },
   photoUrl: { type: String, required: false },
 });
 

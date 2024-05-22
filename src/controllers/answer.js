@@ -38,8 +38,8 @@ export const INSERT_ANSWER = async (req, res) => {
       id: uuidv4(),
       title: req.body.title,
       user: user.id,
-      content: { type: Number, required: true },
-      photoUrl: { type: String, required: false },
+      content: req.body.content,
+      photoUrl: req.body.photoUrl,
     });
     const response = await answer.save();
 

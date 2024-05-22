@@ -38,8 +38,11 @@ export const CREATE_QUESTION = async (req, res) => {
       id: uuidv4(),
       title: req.body.title,
       user: user.id,
-      content: req.body.price,
+      content: req.body.content,
       photoUrl: req.body.photoUrl,
+      like: req.body.like,
+      dislike: req.body.dislike,
+      answers: req.body.answers
     });
     const response = await question.save();
 
@@ -67,5 +70,47 @@ export const DELETE_QUESTION_BY_ID = async (req, res) => {
     return res.status(200).json({ response: response });
   } catch (err) {
     console.log(err);
+  }
+};
+// ======================================================
+export const LIKE_QUESTION = async (req, res) => {
+  try {
+    const questionId = req.params.id; 
+
+    const question = await QuestionModel.findByIdAndUpdate(
+      questionId, 
+      { $inc: { like: 1 } }, // Increment like count
+      { new: true } // Return the updated document
+    );
+
+    if (!question) {
+      return res.status(404).json({ message: "No question found" });
+    }
+
+    return res.status(200).json({ question: question });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const DISLIKE_QUESTION = async (req, res) => {
+  try {
+    const questionId = req.params.id; 
+
+    const question = await QuestionModel.findByIdAndUpdate(
+      questionId,
+      { $inc: { dislike: 1 } }, // Increment dislike count
+      { new: true } // Return the updated document
+    );
+
+    if (!question) {
+      return res.status(404).json({ message: "No question found" });
+    }
+
+    return res.status(200).json({ question: question });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
