@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import UserModel from "../models/user.js";
 
+
 // taip pat butinas pletinys.js path pabaigoje
 import AnswerModel from "../models/answer.js";
 
@@ -29,22 +30,32 @@ export const INSERT_ANSWER = async (req, res) => {
   try {
     console.log(req.body);
 
-    const user = await UserModel.findOne({ name: req.body.user });
+    const user = await UserModel.findOne({ userId: req.body.userId });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const questionId = req.body.questionId; // Assuming questionId is in the request body
+
+    if (!questionId) {
+      return res.status(400).json({ message: "Missing question ID" });
+    }
+
     const answer = new AnswerModel({
-      id: uuidv4(),
-      title: req.body.title,
-      user: user.id,
+     
+       userId: req.body.userId ,
+          title: req.body.title,
       content: req.body.content,
       photoUrl: req.body.photoUrl,
+      createdAt: { type: Date, default: Date.now },
+      updatedAt: { type: Date, default: Date.now },
+      votesUp: req.body.votesUp,
+      votesDown: req.body.votesDown,
     });
     const response = await answer.save();
 
-    user.answers.push(answer.id);
-    await user.save();
+    // user.answers.push(answer.id);
+    // await user.save();
 
     return res
       .status(200)

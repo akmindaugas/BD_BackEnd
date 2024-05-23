@@ -29,7 +29,8 @@ export const CREATE_QUESTION = async (req, res) => {
   try {
     console.log(req.body);
 
-    const user = await UserModel.findOne({ name: req.body.user });
+    const user = await UserModel.findOne({ userId: req.body.userId });
+    console.log(user)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -37,17 +38,20 @@ export const CREATE_QUESTION = async (req, res) => {
     const question = new QuestionModel({
       id: uuidv4(),
       title: req.body.title,
-      user: user.id,
+      userId: req.body.userId,
+      createdAt: { type: Date, default: Date.now },
+      updatedAt: { type: Date, default: Date.now },
       content: req.body.content,
       photoUrl: req.body.photoUrl,
-      like: req.body.like,
-      dislike: req.body.dislike,
-      answers: req.body.answers
+      votesUp: req.body.votesUp,
+      votesDown: req.body.votesDown,
+ 
     });
+    console.log(req.body)
     const response = await question.save();
 
-    user.questions.push(question.id);
-    await user.save();
+   
+    // await user.save();
 
     return res
       .status(200)
@@ -114,3 +118,41 @@ export const DISLIKE_QUESTION = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// ///////////=======================================
+// export const VOTE_QUESTION = async (req, res) => {
+//   try {
+//     const questionId = req.params.id;
+//     const vote = req.body.vote; // Assuming vote can be either 'up' or 'down'
+
+//     if (!vote || (vote !== 'up' && vote !== 'down')) {
+//       return res.status(400).json({ message: "Invalid vote type" });
+//     }
+
+//     const update = {
+//       $inc: {
+//         [vote === 'up' ? 'votesUp' : 'votesDown']: 1, // Dynamically update votesUp or votesDown
+//       },
+//     };
+
+//     const question = await QuestionModel.findByIdAndUpdate(
+//       questionId,
+//       update,
+//       { new: true } // Return the updated document
+//     );
+
+//     if (!question) {
+//       return res.status(404).json({ message: "No question found" });
+//     }
+
+//     return res.status(200).json({ question: question });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
+
+// // Usage example (assuming vote is either 'up' or 'down')
+// req.body = { vote: 'up' }; // Vote up the question
+// // or
+// req.body = { vote: 'down' }; // Vote down the question

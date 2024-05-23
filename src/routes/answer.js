@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/answers", GET_ALL_ANSWERS);
 router.get("/answers/:id", GET_ANSWER_BY_ID);
-router.post("/answers", INSERT_ANSWER);
+router.post("/answers/:id", INSERT_ANSWER);
 router.delete("/answers/:id", DELETE_ANSWER_BY_ID);
 // put aut where it belongs
 

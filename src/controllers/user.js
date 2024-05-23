@@ -46,9 +46,10 @@ export const SIGN_IN = async (req, res) => {
         name: capitalizedUserName,
         email: req.body.email,
         password: hash,
-        questions: [],
-        answers: [],
+        answerIds: [],
+        questionIds: [], 
       });
+
 
       const response = await user.save();
 
