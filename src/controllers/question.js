@@ -83,8 +83,8 @@ export const LIKE_QUESTION = async (req, res) => {
 
     const question = await QuestionModel.findByIdAndUpdate(
       questionId, 
-      { $inc: { like: 1 } }, // Increment like count
-      { new: true } // Return the updated document
+      { $inc: { like: 1 } }, 
+      { new: true } 
     );
 
     if (!question) {
@@ -104,8 +104,8 @@ export const DISLIKE_QUESTION = async (req, res) => {
 
     const question = await QuestionModel.findByIdAndUpdate(
       questionId,
-      { $inc: { dislike: 1 } }, // Increment dislike count
-      { new: true } // Return the updated document
+      { $inc: { dislike: 1 } }, 
+      { new: true } 
     );
 
     if (!question) {

@@ -8,7 +8,7 @@ import {
 
 import { auth } from "../middlewares/auth.js";
 
-// per si routeri kuriame visu endpointus
+
 const router = express.Router();
 
 router.get("/answers", GET_ALL_ANSWERS);

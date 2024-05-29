@@ -10,7 +10,7 @@ import {
  
 } from "../controllers/user.js";
 
-// per si routeri kuriame visu endpointus
+
 const router = express.Router();
 
 router.post("/users", SIGN_IN);

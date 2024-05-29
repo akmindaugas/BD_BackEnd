@@ -35,7 +35,7 @@ export const INSERT_ANSWER = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const questionId = req.body.questionId; // Assuming questionId is in the request body
+    const questionId = req.body.questionId; 
 
     if (!questionId) {
       return res.status(400).json({ message: "Missing question ID" });
